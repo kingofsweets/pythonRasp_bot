@@ -1,0 +1,131 @@
+            url = 'https://ictis.alex-b.me/3.htm'
+            r = requests.get(url)
+
+            soup = BeautifulSoup(r.text, 'html.parser')
+            table = soup.find('table')
+            pars = []
+            timel = []
+            pnd = []
+            vt = []
+            sred = []
+            chetv = []
+            pyatnica = []
+            subbota = []
+            for tr in table.find_all('tr'):
+                tds = tr.find_all('td')
+                for td in tds:
+                    pars.append(td.get_text())
+            for i in range(len(pars)):
+                if pars[i] == '':
+                    pars[i] = 'Окно'
+            for i in range(len(pars)):
+                if i > 8 and i < 16:
+                    timel.append(pars[i])
+
+            for i in range(len(pars)):
+                if i > 15 and i < 24:
+                    pnd.append(pars[i])
+            for i in range(len(pars)):
+                if i > 23 and i < 32:
+                    vt.append(pars[i])
+            for i in range(len(pars)):
+                if i > 31 and i < 40:
+                    sred.append(pars[i])
+            for i in range(len(pars)):
+                if i > 39 and i < 48:
+                    chetv.append(pars[i])
+            for i in range(len(pars)):
+                if i > 47 and i < 56:
+                    pyatnica.append(pars[i])
+            for i in range(len(pars)):
+                if i > 55 and i < 64:
+                    subbota.append(pars[i])
+
+
+
+
+
+            elif request == "/Расписание понедельник" or request == "/расписание понедельник":
+                for i in range(len(pnd)):
+                    if i == 0:
+                        write_msg(event.user_id, str(pnd[i]))
+                    else:
+                        write_msg(event.user_id, str(timel[i-1]+': '+pnd[i]))
+            elif request == "/Расписание вторник" or request == "/расписание вторник":
+                for i in range(len(vt)):
+                    if i == 0:
+                        write_msg(event.user_id, str(vt[i]))
+                    else:
+                        write_msg(event.user_id, str(timel[i-1]+': '+vt[i]))
+            elif request == "/Расписание среда" or request == "/расписание среда":
+                for i in range(len(sred)):
+                    if i == 0:
+                        write_msg(event.user_id, str(sred[i]))
+                    else:
+                        write_msg(event.user_id, str(timel[i-1]+': '+sred[i]))
+            elif request == "/Расписание четверг" or request == "/расписание четверг":
+                for i in range(len(chetv)):
+                    if i == 0:
+                        write_msg(event.user_id, str(chetv[i]))
+                    else:
+                        write_msg(event.user_id, str(timel[i-1]+': '+chetv[i]))
+            elif request == "/Расписание пятница" or request == "/расписание пятница":
+                for i in range(len(pyatnica)):
+                    if i == 0:
+                        write_msg(event.user_id, str(pyatnica[i]))
+                    else:
+                        write_msg(event.user_id, str(timel[i-1]+': '+pyatnica[i]))
+            elif request == "/Расписание суббота" or request == "/расписание суббота":
+                for i in range(len(subbota)):
+                    if i == 0:
+                        write_msg(event.user_id, str(subbota[i]))
+                    else:
+                        write_msg(event.user_id, str(timel[i-1]+': '+subbota[i]))
+
+
+
+
+
+
+
+
+
+
+
+
+                                        if responseraspa == 'Понедельник':
+                    for i in range(len(pnd)):
+                        if i == 0:
+                            write_msg(event.user_id, str(pnd[i]))
+                        else:
+                            write_msg(event.user_id, str(timel[i - 1] + ': ' + pnd[i]))
+                elif responseraspa == 'Вторник':
+                    for i in range(len(vt)):
+                        if i == 0:
+                            write_msg(event.user_id, str(vt[i]))
+                        else:
+                            write_msg(event.user_id, str(timel[i - 1] + ': ' + vt[i]))
+                elif responseraspa == 'Среда':
+                    for i in range(len(sred)):
+                        if i == 0:
+                            write_msg(event.user_id, str(sred[i]))
+                        else:
+                            write_msg(event.user_id, str(timel[i - 1] + ': ' + sred[i]))
+                elif responseraspa == 'Четверг':
+                    for i in range(len(chetv)):
+                        if i == 0:
+                            write_msg(event.user_id, str(chetv[i]))
+                        else:
+                            write_msg(event.user_id, str(timel[i - 1] + ': ' + chetv[i]))
+                elif responseraspa == 'Пятница':
+                    for i in range(len(pyatnica)):
+                        if i == 0:
+                            write_msg(event.user_id, str(pyatnica[i]))
+                        else:
+                            write_msg(event.user_id, str(timel[i - 1] + ': ' + pyatnica[i]))
+                elif responseraspa == 'Суббота':
+                    for i in range(len(subbota)):
+                        if i == 0:
+                            write_msg(event.user_id, str(subbota[i]))
+                        else:
+                            write_msg(event.user_id, str(timel[i - 1] + ': ' + subbota[i]))

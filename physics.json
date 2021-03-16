@@ -1,0 +1,23 @@
+{
+  "buttons": [
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "кинематика",
+          "payload": ""
+        }
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "динамика",
+          "payload": ""
+        }
+      }
+    ]
+  ],
+  "inline": true
+}

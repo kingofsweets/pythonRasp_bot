@@ -1,0 +1,41 @@
+{
+  "buttons": [
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "Физика",
+          "payload": ""
+        }
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "Матан",
+          "payload": ""
+        }
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "ВИВИВИВИВИВИд",
+          "payload": ""
+        }
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "Ссылочки",
+          "payload": ""
+        }
+      }
+    ]
+  ],
+  "inline": true
+}

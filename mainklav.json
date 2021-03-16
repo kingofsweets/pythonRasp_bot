@@ -1,0 +1,54 @@
+{
+  "buttons": [
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "Расписание: текущая неделя",
+          "payload": ""
+        },
+        "color": "positive"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "Расписание: следующая неделя",
+          "payload": ""
+        },
+        "color": "positive"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "Включить душевные беседы",
+          "payload": ""
+        },
+        "color": "secondary"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "Основная информация",
+          "payload": ""
+        },
+        "color": "primary"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "open_link",
+          "link": "https://discord.gg/cGTsWw8",
+          "label": "Discord(Вход в орден пингвинов)",
+          "payload": ""
+        }
+      }
+    ]
+  ]
+}

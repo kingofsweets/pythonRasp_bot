@@ -1,0 +1,54 @@
+{
+  "buttons": [
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "Кто гей?",
+          "payload": ""
+        },
+        "color": "positive"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "Кто геи?",
+          "payload": ""
+        },
+        "color": "positive"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "Заключить пивной договор!",
+          "payload": ""
+        },
+        "color": "secondary"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "Инфа",
+          "payload": ""
+        },
+        "color": "primary"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "open_link",
+          "link": "https://discord.gg/cGTsWw8",
+          "label": "Discord(Вход в орден пингвинов)",
+          "payload": ""
+        }
+      }
+    ]
+  ]
+}

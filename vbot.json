@@ -1,0 +1,14 @@
+{
+  "buttons": [
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "Отключить разговоры с ботом",
+          "payload": ""
+        },
+        "color": "negative"
+      }
+    ]
+  ]
+}
