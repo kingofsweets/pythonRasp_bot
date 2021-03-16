@@ -6,10 +6,7 @@ import vk_api
 from gtts import gTTS
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 from vk_api.keyboard import VkKeyboard, VkKeyboardColor
-from chatterbot import ChatBot
 
-# Создаем экземпляр пространства для бота
-chatbot = ChatBot("Умный чел")
 
 keyboard = VkKeyboard(one_time=True)
 keyboard.add_button('Привет', color=VkKeyboardColor.NEGATIVE)
@@ -195,15 +192,3 @@ for event in longpoll.listen():
                     random_id=random.getrandbits(64),
                     attachment='photo-198702757_457239079'
                 )
-
-
-
-
-
-            elif message == '[club198702757|тайное общество ктбо 1-3] ' + zapros:
-                print('ДЩдыаы')
-                response = chatbot.get_response(zapros)
-                send_message(event.chat_id, response)
-                print(message)
-                print(response)
-            time.sleep(4)
