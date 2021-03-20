@@ -1,0 +1,35 @@
+{
+  "buttons": [
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "\uD83D\uDD2EУзнать судьбу\uD83D\uDD2E",
+          "payload": ""
+        },
+        "color": "secondary"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "\uD83D\uDCD8Таблица мужей\uD83D\uDCD8",
+          "payload": ""
+        },
+        "color": "secondary"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "\uD83C\uDFADКто я?\uD83C\uDFAD",
+          "payload": ""
+        },
+        "color": "secondary"
+      }
+    ]
+  ],
+  "inline": true
+}

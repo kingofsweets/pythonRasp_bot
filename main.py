@@ -14,8 +14,8 @@ trainer = ListTrainer(chatbot)
 # Открываем файлы с датасетами
 t1 = open('anim_0.txt', 'r', encoding='utf-8').readlines()
 t2 = open('anim_1.txt', 'r', encoding='utf-8').readlines()
-t3 = open('Типичный японский боевик.txt', 'r', encoding='utf-8').readlines()
-t4 = open('Яп_2.txt', 'r', encoding='utf-8').readlines()
+t3 = open('Data_sets/Типичный японский боевик.txt', 'r', encoding='utf-8').readlines()
+t4 = open('Data_sets/Яп_2.txt', 'r', encoding='utf-8').readlines()
 
 
 # Подгружаем данные для тренировки бота
@@ -27,7 +27,20 @@ t4 = open('Яп_2.txt', 'r', encoding='utf-8').readlines()
 # Создаем функции ответа бота для каждого типа клавиатуры
 def write_msg(user_id, message):
     vk.method('messages.send', {'user_id': user_id, 'message': message, 'random_id': random.getrandbits(64),
-                                'keyboard': open("mainklav.json", "r", encoding="UTF-8").read()})
+                                'keyboard': open("keyboards/mainklav.json", "r", encoding="UTF-8").read()})
+
+
+def write_msggs(user_id, message):
+    vk.method('messages.send', {'user_id': user_id, 'message': message, 'random_id': random.getrandbits(64),
+                                'keyboard': open("keyboards/mainklav.json", "r", encoding="UTF-8").read()})
+
+
+def bazar(id):
+    a = vk.method('docs.getUploadServer')
+    b = requests.post(a['upload_url'], files={'file': open('say.mp3', 'rb')}).json()
+    c = vk.method("docs.save", {"file": b["file"]})[0]
+    d = 'doc{}_{}'.format(c['owner_id'], c['id'])
+    vk.method('messages.send', {'peer_id': id, 'attachment': d, "random_id": random.randint(1, 2147483647)})
 
 
 def write_msginbeseda(chat_id, message):
@@ -36,26 +49,26 @@ def write_msginbeseda(chat_id, message):
 
 def write_msgwbot(user_id, message):
     vk.method('messages.send', {'user_id': user_id, 'message': message, 'random_id': random.getrandbits(64),
-                                'keyboard': open("vbot.json", "r", encoding="UTF-8").read()})
+                                'keyboard': open("keyboards/vbot.json", "r", encoding="UTF-8").read()})
 
 
 def write_msginrasptek(user_id, message):
     vk.method('messages.send', {'user_id': user_id, 'message': message, 'random_id': random.getrandbits(64),
-                                'keyboard': open("raspklav.json", "r", encoding="UTF-8").read()})
+                                'keyboard': open("keyboards/raspklav.json", "r", encoding="UTF-8").read()})
 
 
 def write_msginraspsled(user_id, message):
     vk.method('messages.send', {'user_id': user_id, 'message': message, 'random_id': random.getrandbits(64),
-                                'keyboard': open("raspsledklav.json", "r", encoding="UTF-8").read()})
+                                'keyboard': open("keyboards/raspsledklav.json", "r", encoding="UTF-8").read()})
 
 
 def write_msgmaininf(user_id, message):
     vk.method('messages.send', {'user_id': user_id, 'message': message, 'random_id': random.getrandbits(64),
-                                'keyboard': open("info.json", "r", encoding="UTF-8").read()})
+                                'keyboard': open("keyboards/info.json", "r", encoding="UTF-8").read()})
 
 
 # Подлюкчаем токен группы
-token = "b1ad852d06f06119f8b049d2db6b5ec740593773b94884a0592e6802ce4821aaab2ab004442d3f9aff3c8"
+token = "448a161c4370d920f09782b8ea67453e58f64ebe60444d3a6e3c99de30c1f6214ff9e838e3f713e7ee246"
 vk = vk_api.VkApi(token=token)
 longpoll = VkLongPoll(vk)
 
@@ -251,6 +264,8 @@ while True:
                     break
                 elif request == 'Основная информация':
                     write_msgmaininf(event.user_id, 'Ссылки:')
+                elif request == 'Test_gs':
+                    bazar(event.user_id)
                 else:
                     write_msg(event.user_id, 'Выберите команду')
 

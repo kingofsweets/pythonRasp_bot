@@ -1,0 +1,41 @@
+{
+  "buttons": [
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "Физика",
+          "payload": ""
+        }
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "Матан",
+          "payload": ""
+        }
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "промокоды_додо",
+          "payload": ""
+        }
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "Ссылочки",
+          "payload": ""
+        }
+      }
+    ]
+  ],
+  "inline": true
+}

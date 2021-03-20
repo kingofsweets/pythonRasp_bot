@@ -1,0 +1,42 @@
+{
+  "buttons": [
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "\uD83D\uDCACСоциальный актив\uD83D\uDCAC",
+          "payload": ""
+        },
+        "color": "secondary"
+      },
+      {
+        "action": {
+          "type": "text",
+          "label": "\uD83D\uDC41Всё о тебе\uD83D\uDC41",
+          "payload": ""
+        },
+        "color": "secondary"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "Ждите обновы",
+          "payload": ""
+        },
+        "color": "secondary"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "Инфа",
+          "payload": ""
+        },
+        "color": "primary"
+      }
+    ]
+  ]
+}
