@@ -217,7 +217,7 @@ def main_conept():
                         if pk.status == '1':
                             for chel in maimes:
                                 if chel.id == pk.owner_id:
-                                    info_map += f'{pk.point}, Хозяин: {chel.name}, Цвет: {pk.color}\n, Доход с точки: {pk.cost/100}'
+                                    info_map += f'{pk.point}, Хозяин: {chel.name}, Цвет: {pk.color}\n, Доход с точки: {pk.cost / 100}'
                     send_message(event.chat_id, 'Текущие занятые точки: \n' + info_map)
 
 
@@ -239,7 +239,8 @@ def main_conept():
                                             INFO_STATUS.refactor_map('status', '1', point)
                                             if chel.count_events <= 0:
 
-                                                color = str(random.randint(1, 255)) + ',' + str(random.randint(1, 255)) + ',' + str(random.randint(1, 255))
+                                                color = str(random.randint(1, 255)) + ',' + str(
+                                                    random.randint(1, 255)) + ',' + str(random.randint(1, 255))
                                                 INFO_STATUS.refactor_map('color', color, point)
                                             else:
                                                 for spk in points:
@@ -251,7 +252,8 @@ def main_conept():
                                             INFO_STATUS.refactor_member('improve_money',
                                                                         ((chel.count_events + 1) * 450) / 100, chel.id)
 
-                                            send_message(event.chat_id, f'Теперь ваш доход составляет:{((chel.count_events + 1) * 450) / 100} (рубли/минута)')
+                                            send_message(event.chat_id,
+                                                         f'Теперь ваш доход составляет:{((chel.count_events + 1) * 450) / 100} (рубли/минута)')
 
                                             INFO_STATUS.refactor_map('Owner_id', chel.id, point)
                                             map_gg.map_gen()
@@ -296,10 +298,14 @@ def main_conept():
                     send_messagept(event.chat_id, 'Держите', 'photo-198702757_457239079')
 
 
-opa = threading.Thread(target=upp_money)
-opa.start()
-bot_session = vk_api.VkApi(
-    token="448a161c4370d920f09782b8ea67453e58f64ebe60444d3a6e3c99de30c1f6214ff9e838e3f713e7ee246")
-vk = bot_session.get_api()
-longpoll = VkBotLongPoll(bot_session, 198702757)
-main_conept()
+while True:
+    try:
+        opa = threading.Thread(target=upp_money)
+        opa.start()
+        bot_session = vk_api.VkApi(
+            token="448a161c4370d920f09782b8ea67453e58f64ebe60444d3a6e3c99de30c1f6214ff9e838e3f713e7ee246")
+        vk = bot_session.get_api()
+        longpoll = VkBotLongPoll(bot_session, 198702757)
+        main_conept()
+    except BaseException:
+        print('reconnect')
