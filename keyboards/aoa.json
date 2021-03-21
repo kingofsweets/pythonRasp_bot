@@ -22,10 +22,10 @@
       {
         "action": {
           "type": "text",
-          "label": "Ждите обновы",
+          "label": "Договор о земле",
           "payload": ""
         },
-        "color": "secondary"
+        "color": "primary"
       }
     ],
     [
