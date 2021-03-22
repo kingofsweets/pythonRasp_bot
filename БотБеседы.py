@@ -1,6 +1,7 @@
 import random
 import time
 import re
+import easy_logic
 
 import threading
 
@@ -24,6 +25,8 @@ def upp_money():
         maimes = INFO_STATUS.getter_members()
         for chel in maimes:
             INFO_STATUS.refactor_member('coins', chel.coins + chel.improve, chel.id)
+            if chel.energy < easy_logic.max_energy(chel.lvl):
+                INFO_STATUS.refactor_member('energy', chel.energy + 5, chel.id)
         time.sleep(60)
 
 
@@ -161,8 +164,9 @@ def main_conept():
                                 predsm.append(line)
                             random_preds = random.randint(0, len(predsm))
                             send_message(event.chat_id, predsm[random_preds])
-                            random_coins = random.randint(-30, 45)
+                            random_coins = random.randint(-180, 45)
                             INFO_STATUS.refactor_member('coins', chel.coins + random_coins, chel.id)
+                            send_message(event.chat_id,'Идите работать!')
                             send_message(event.chat_id,
                                          f'Предсказание завело его в недра деньжат. @id{chel.id}({chel.name}) получает {random_coins} рубасиков')
 
@@ -199,37 +203,51 @@ def main_conept():
                     maimes = INFO_STATUS.getter_members()
                     for chel in maimes:
                         if chel.id == event.obj['from_id']:
-                            send_message(event.chat_id,
+                            info = f"""
+                            Вы - ⚒{chel.classs}⚒, а так же законный {chel.titul}. Имеете при себе {chel.count_events} участков,
+                            Получая при этом 💎{chel.improve}💎 монет в минуту.
+                            Ваши характеристики следующие:\n
+                            Уровень @id{chel.id}({chel.name}): {chel.lvl}   |||  Опыт:🔰{chel.xp}/{easy_logic.lvl_formula(chel.lvl)}🔰
+                            Энергия 💚{chel.energy}/{easy_logic.max_energy(chel.lvl)}💚
+
+
+                            """
+                            send_message(event.chat_id, info +
                                          f'🔸@id{chel.id}({chel.name})🔸 | 🧙Степень гейства🧙: {chel.gay_lvl} |  💰Падшие рубли💰: {chel.coins}')
 
-                elif message == 'договор о земле':
-                    send_message(event.chat_id, 'Ого! Господин хочет купить землю? Беллисимо, превосходно! Посмотрите '
-                                                'на карту.')
-                    map_gg.map_gen()
-                    photo = upload_photo('temp_of_map_gen.png')
+                elif message == 'информация о землях':
+                    send_message(event.chat_id,
+                                 'Ого! Господин хочет купить землю? Беллисимо, превосходно! Посмотрите '
+                                 'на карту.')
+                    map_gg.map_gen_forbuy()
+                    photo = upload_photo('temp_of_map_gen_forbuy.png')
 
-                    send_messagept(event.chat_id, 'Вот, выбери свободные участки и плати! Каждый стоит 3000 падших '
-                                                  'монет!', photo)
-                    points = INFO_STATUS.getter_map_for_buy()
+                    send_messagept(event.chat_id,
+                                   'Вот, выбери свободные участки и плати! Цены указаны на самих землях.', photo)
+                    points = INFO_STATUS.getter_map_for_draw()
                     info_map = ''
                     maimes = INFO_STATUS.getter_members()
                     for pk in points:
+                        print(pk.cost)
                         if pk.status == '1':
                             for chel in maimes:
                                 if chel.id == pk.owner_id:
-                                    info_map += f'{pk.point}, Хозяин: {chel.name}, Цвет: {pk.color}\n, Доход с точки: {pk.cost / 100}'
+                                    info_map += f'🗺{pk.point}🗺, Хозяин: {chel.name}, Доход с точки: {pk.cost / 1000}\n'
                     send_message(event.chat_id, 'Текущие занятые точки: \n' + info_map)
 
 
                 elif re.search(r'\bкупить участок\b', message):
                     maimes = INFO_STATUS.getter_members()
+                    pointsd = INFO_STATUS.getter_map_all()
+                    point = message.replace('купить участок ', '').title()
+                    for pk in pointsd:
+                        if pk.point == point:
+                            sta = pk.cost
                     for chel in maimes:
                         if chel.id == event.obj['from_id']:
-                            if chel.coins >= 3000:
-                                point = message.replace('купить участок ', '').title()
-                                print(point)
-                                points = INFO_STATUS.getter_map_for_buy()
-                                for pk in points:
+                            send_message(event.chat_id, f'Стоимость участка: {(chel.count_events + 1) * sta} рубасецов')
+                            if chel.coins >= (chel.count_events + 1) * sta:
+                                for pk in pointsd:
                                     if pk.point == point:
                                         if pk.status != '1':
                                             send_message(event.chat_id,
@@ -243,17 +261,17 @@ def main_conept():
                                                     random.randint(1, 255)) + ',' + str(random.randint(1, 255))
                                                 INFO_STATUS.refactor_map('color', color, point)
                                             else:
-                                                for spk in points:
+                                                for spk in pointsd:
                                                     if spk.owner_id == chel.id:
                                                         color = spk.color
                                                         break
                                                 INFO_STATUS.refactor_map('color', color, point)
                                             INFO_STATUS.refactor_member('count_event', chel.count_events + 1, chel.id)
                                             INFO_STATUS.refactor_member('improve_money',
-                                                                        ((chel.count_events + 1) * 450) / 100, chel.id)
+                                                                        (chel.improve + (pk.cost / 1000))*chel.lvl, chel.id)
 
                                             send_message(event.chat_id,
-                                                         f'Теперь ваш доход составляет:{((chel.count_events + 1) * 450) / 100} (рубли/минута)')
+                                                         f'Теперь ваш доход составляет:{(chel.improve + (pk.cost / 1000))*chel.lvl} (рубли/минута)')
 
                                             INFO_STATUS.refactor_map('Owner_id', chel.id, point)
                                             map_gg.map_gen()
@@ -264,9 +282,44 @@ def main_conept():
                             else:
                                 send_message(event.chat_id, 'Недостаточно денег для покупки!')
 
+                elif re.search(r'\bсменить профессию на\b', message):
+                    name = message.replace('сменить профессию на ', '')
+                    name = name.title()
+                    id = event.obj['from_id']
+                    if name == 'Алхимик' or name == 'Ремесленник' or name == 'Повар':
+                        INFO_STATUS.refactor_member(property='class', value=name, id=id)
+                        send_message(event.chat_id, f'Успешно изменена профессия чела @id{id} на {name}')
+                    else:
+                        send_message(event.chat_id, 'Такой профессии нет! Хавтит надо мной издеваться!')
 
-
-
+                elif message == '⚒работать⚒':
+                    maimes = INFO_STATUS.getter_members()
+                    for chel in maimes:
+                        if chel.id == event.obj['from_id']:
+                            if chel.energy - 30 > 0:
+                                energy = chel.energy - 30
+                                INFO_STATUS.refactor_member('energy', energy, chel.id)
+                                xp = random.randint((chel.lvl + 1) * 150, (chel.lvl + 1) * 500)
+                                INFO_STATUS.refactor_member('xp', chel.xp + xp, chel.id)
+                                info = f"""
+                                🎯Работа🎯 {chel.classs}а очень тяжела, порой она заставляет взглянуть на мир по-другому.
+                                @id{chel.id}({chel.name}) работал сегодня очень усрендно и получил {xp} опыта. 
+                                При этом он потратил 30 энергии. У него осталось только 💚{energy}💚 энерии .
+                                                                                        """
+                                money = random.randint((chel.lvl + 1) * 3, (chel.lvl + 1) * 25)
+                                if money < ((chel.lvl + 1) * 3 + (chel.lvl + 1) * 25) // 2:
+                                    info_2 = f'Однако начальник его не взлюбил, поэтому дал всего лишь 💰{money}💰 падших рублей.'
+                                else:
+                                    info_2 = f'И ему повезло, ведь начальник дал ему целых 💰{money}💰 падших рублей.'
+                                info = info + info_2
+                                send_message(event.chat_id, info)
+                                send_message(event.chat_id,
+                                             f'Уровень @id{chel.id}({chel.name}): {chel.lvl}||| Опыт: 🔰{chel.xp + xp}/{easy_logic.lvl_formula(chel.lvl)}🔰')
+                                if chel.xp + xp >= easy_logic.lvl_formula(chel.lvl):
+                                    send_message(event.chat_id, f'🏆Уровень повышен до {chel.lvl + 1}🏆')
+                                    INFO_STATUS.refactor_member('lvl', chel.lvl + 1, chel.id)
+                            else:
+                                send_message(event.chat_id, f'💚Недостаточно энергии💚')
 
 
 
@@ -278,6 +331,11 @@ def main_conept():
 
                 elif message == '👁всё о тебе👁':
                     send_messageklava(event.chat_id, 'На', "keyboards/world_and_you.json")
+                elif message == 'управление землёй':
+                    send_messageklava(event.chat_id, 'На', "keyboards/my_earth.json")
+
+                elif message == 'глоссарий по боту':
+                    send_messageklava(event.chat_id, 'На', "keyboards/bot_info.json")
 
                 elif message == 'ссылочки':
                     print('safs')
@@ -298,14 +356,10 @@ def main_conept():
                     send_messagept(event.chat_id, 'Держите', 'photo-198702757_457239079')
 
 
-while True:
-    try:
-        opa = threading.Thread(target=upp_money)
-        opa.start()
-        bot_session = vk_api.VkApi(
-            token="448a161c4370d920f09782b8ea67453e58f64ebe60444d3a6e3c99de30c1f6214ff9e838e3f713e7ee246")
-        vk = bot_session.get_api()
-        longpoll = VkBotLongPoll(bot_session, 198702757)
-        main_conept()
-    except BaseException:
-        print('reconnect')
+opa = threading.Thread(target=upp_money)
+opa.start()
+bot_session = vk_api.VkApi(
+    token="448a161c4370d920f09782b8ea67453e58f64ebe60444d3a6e3c99de30c1f6214ff9e838e3f713e7ee246")
+vk = bot_session.get_api()
+longpoll = VkBotLongPoll(bot_session, 198702757)
+main_conept()

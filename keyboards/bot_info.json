@@ -4,39 +4,42 @@
       {
         "action": {
           "type": "text",
-          "label": "\uD83D\uDCACСоциальный актив\uD83D\uDCAC",
+          "label": "Профессии",
           "payload": ""
         },
-        "color": "secondary"
-      },
-      {
-        "action": {
-          "type": "text",
-          "label": "\uD83D\uDC41Всё о тебе\uD83D\uDC41",
-          "payload": ""
-        },
-        "color": "secondary"
+        "color": "primary"
       }
     ],
     [
       {
         "action": {
           "type": "text",
-          "label": "\uD83D\uDCDCУправление землёй\uD83D\uDCDC",
+          "label": "Земли",
           "payload": ""
         },
-        "color": "secondary"
+        "color": "primary"
       }
     ],
     [
       {
         "action": {
           "type": "text",
-          "label": "Инфа",
+          "label": "Уровень/ресурсы",
           "payload": ""
         },
-        "color": "secondary"
+        "color": "primary"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "Общие команды",
+          "payload": ""
+        },
+        "color": "primary"
       }
     ]
-  ]
+  ],
+  "inline": true
 }

@@ -29,7 +29,39 @@
         },
         "color": "secondary"
       }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "⚒Работать⚒",
+          "payload": ""
+        },
+        "color": "secondary"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "Учиться",
+          "payload": ""
+        },
+        "color": "secondary"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "Продать ресурсы",
+          "payload": ""
+        },
+        "color": "secondary"
+      }
     ]
   ],
+
+
   "inline": true
 }

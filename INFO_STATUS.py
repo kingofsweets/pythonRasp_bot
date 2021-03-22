@@ -1,3 +1,4 @@
+import random
 import sqlite3
 
 
@@ -15,6 +16,11 @@ def getter_members():
         a.lvl = member[4]
         a.count_events = member[5]
         a.improve = member[6]
+        a.titul = member[7]
+        a.classs = member[8]
+        a.energy = member[9]
+        a.xp = member[10]
+
         members.append(a)
     return members
 
@@ -31,11 +37,29 @@ def getter_map_for_draw():
             a.status = point[1]
             a.owner_id = point[2]
             a.color = point[3]
+            a.cost = point[4]
             points.append(a)
     return points
 
 
 def getter_map_for_buy():
+    db = sqlite3.connect('info_pan.db')
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM map")
+    points = []
+    for point in cursor.fetchall():
+        if point[1] != '1':
+            a = MAP()
+            a.point = point[0]
+            a.status = point[1]
+            a.owner_id = point[2]
+            a.color = point[3]
+            a.cost = point[4]
+            points.append(a)
+    return points
+
+
+def getter_map_all():
     db = sqlite3.connect('info_pan.db')
     cursor = db.cursor()
     cursor.execute("SELECT * FROM map")
@@ -75,6 +99,10 @@ class Infochar():
     lvl = 0
     count_events = 0
     improve = 0
+    titul = ''
+    classs = ''
+    energy = 0
+    xp = 0
 
     def saver(self):
         db = sqlite3.connect('info_pan.db')
@@ -100,8 +128,8 @@ class MAP:
     def saver(self):
         db = sqlite3.connect('info_pan.db')
         cursor = db.cursor()
-        cursor.execute(f"""INSERT INTO map(coord, status, owner_id)
-                        VALUES('{self.point}','{self.status}','{self.owner_id}')
+        cursor.execute(f"""INSERT INTO map(coord, status, owner_id, cost)
+                        VALUES('{self.point}','{self.status}','{self.owner_id}','{self.cost}')
         """)
         db.commit()
         db.close()
@@ -109,15 +137,16 @@ class MAP:
 # j1 = 0
 # j2 = 0
 # for i in range(0, 100):
-#     a = MAP()
-#     a.point = a.first_point[j2] + str(j1 + 1)
-#     j1 += 1
-#     if j1 % 10 == 0:
-#         j2 += 1
-#     if j1 > 9:
-#         j1 = 0
-#     a.status = 'none'
-#     a.owner_id = '0'
-#     a.color = 'none'
+#      a = MAP()
+#      a.point = a.first_point[j2] + str(j1 + 1)
+#      j1 += 1
+#      if j1 % 10 == 0:
+#          j2 += 1
+#      if j1 > 9:
+#          j1 = 0
+#      a.status = 'none'
+#      a.owner_id = '0'
+#      a.color = 'none'
+#      a.cost = random.randint(250,3140)
 #
-#     a.saver()
+#      a.saver()
