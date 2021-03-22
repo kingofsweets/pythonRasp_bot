@@ -134,19 +134,19 @@ class MAP:
         db.commit()
         db.close()
 
-# j1 = 0
-# j2 = 0
-# for i in range(0, 100):
-#      a = MAP()
-#      a.point = a.first_point[j2] + str(j1 + 1)
-#      j1 += 1
-#      if j1 % 10 == 0:
-#          j2 += 1
-#      if j1 > 9:
-#          j1 = 0
-#      a.status = 'none'
-#      a.owner_id = '0'
-#      a.color = 'none'
-#      a.cost = random.randint(250,3140)
-#
-#      a.saver()
+j1 = 0
+j2 = 0
+for i in range(0, 100):
+     a = MAP()
+     a.point = a.first_point[j2] + str(j1 + 1)
+     j1 += 1
+     if j1 % 10 == 0:
+         j2 += 1
+     if j1 > 9:
+         j1 = 0
+     a.status = 'none'
+     a.owner_id = '0'
+     a.color = 'none'
+     a.cost = random.randint(250,4000000)
+
+     a.saver()

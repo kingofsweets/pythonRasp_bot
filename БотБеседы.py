@@ -22,12 +22,12 @@ keyboard.add_line()
 
 def upp_money():
     while True:
+        time.sleep(60)
         maimes = INFO_STATUS.getter_members()
         for chel in maimes:
-            INFO_STATUS.refactor_member('coins', chel.coins + chel.improve, chel.id)
+            INFO_STATUS.refactor_member('coins', chel.coins + chel.improve * chel.lvl // 10, chel.id)
             if chel.energy < easy_logic.max_energy(chel.lvl):
-                INFO_STATUS.refactor_member('energy', chel.energy + 5, chel.id)
-        time.sleep(60)
+                INFO_STATUS.refactor_member('energy', chel.energy + 5*(chel.lvl+1), chel.id)
 
 
 def upload_photo(name):
@@ -208,7 +208,7 @@ def main_conept():
                             Получая при этом 💎{chel.improve}💎 монет в минуту.
                             Ваши характеристики следующие:\n
                             Уровень @id{chel.id}({chel.name}): {chel.lvl}   |||  Опыт:🔰{chel.xp}/{easy_logic.lvl_formula(chel.lvl)}🔰
-                            Энергия 💚{chel.energy}/{easy_logic.max_energy(chel.lvl)}💚
+                            Энергия 💚{chel.energy}/{easy_logic.max_energy(chel.lvl)}💚 ({5*chel.lvl} в минуту)
 
 
                             """
@@ -271,7 +271,7 @@ def main_conept():
                                                                         (chel.improve + (pk.cost / 1000))*chel.lvl, chel.id)
 
                                             send_message(event.chat_id,
-                                                         f'Теперь ваш доход составляет:{(chel.improve + (pk.cost / 1000))*chel.lvl} (рубли/минута)')
+                                                         f'Теперь ваш доход составляет:{(chel.improve + (pk.cost / 1000))} (рубли/минута)')
 
                                             INFO_STATUS.refactor_map('Owner_id', chel.id, point)
                                             map_gg.map_gen()
@@ -286,7 +286,7 @@ def main_conept():
                     name = message.replace('сменить профессию на ', '')
                     name = name.title()
                     id = event.obj['from_id']
-                    if name == 'Алхимик' or name == 'Ремесленник' or name == 'Повар':
+                    if name == 'Алхимик' or name == 'Ремесленник' or name == 'Повар'  or name == 'Учитель Немецкого':
                         INFO_STATUS.refactor_member(property='class', value=name, id=id)
                         send_message(event.chat_id, f'Успешно изменена профессия чела @id{id} на {name}')
                     else:
@@ -303,10 +303,11 @@ def main_conept():
                                 INFO_STATUS.refactor_member('xp', chel.xp + xp, chel.id)
                                 info = f"""
                                 🎯Работа🎯 {chel.classs}а очень тяжела, порой она заставляет взглянуть на мир по-другому.
-                                @id{chel.id}({chel.name}) работал сегодня очень усрендно и получил {xp} опыта. 
+                                @id{chel.id}({chel.name}) работал сегодня очень усрендно и получил {xp} опыта.
                                 При этом он потратил 30 энергии. У него осталось только 💚{energy}💚 энерии .
                                                                                         """
                                 money = random.randint((chel.lvl + 1) * 3, (chel.lvl + 1) * 25)
+                                INFO_STATUS.refactor_member('coins', chel.coins + money, chel.id)
                                 if money < ((chel.lvl + 1) * 3 + (chel.lvl + 1) * 25) // 2:
                                     info_2 = f'Однако начальник его не взлюбил, поэтому дал всего лишь 💰{money}💰 падших рублей.'
                                 else:
@@ -331,7 +332,7 @@ def main_conept():
 
                 elif message == '👁всё о тебе👁':
                     send_messageklava(event.chat_id, 'На', "keyboards/world_and_you.json")
-                elif message == 'управление землёй':
+                elif message == '📜управление землёй📜':
                     send_messageklava(event.chat_id, 'На', "keyboards/my_earth.json")
 
                 elif message == 'глоссарий по боту':
@@ -356,10 +357,13 @@ def main_conept():
                     send_messagept(event.chat_id, 'Держите', 'photo-198702757_457239079')
 
 
-opa = threading.Thread(target=upp_money)
-opa.start()
-bot_session = vk_api.VkApi(
-    token="448a161c4370d920f09782b8ea67453e58f64ebe60444d3a6e3c99de30c1f6214ff9e838e3f713e7ee246")
-vk = bot_session.get_api()
-longpoll = VkBotLongPoll(bot_session, 198702757)
-main_conept()
+try:
+    opa = threading.Thread(target=upp_money)
+    opa.start()
+    bot_session = vk_api.VkApi(
+        token="448a161c4370d920f09782b8ea67453e58f64ebe60444d3a6e3c99de30c1f6214ff9e838e3f713e7ee246")
+    vk = bot_session.get_api()
+    longpoll = VkBotLongPoll(bot_session, 198702757)
+    main_conept()
+except BaseException:
+    print('reccccc')
