@@ -1,0 +1,47 @@
+{
+  "buttons": [
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "Атака",
+          "payload": ""
+        },
+        "color": "secondary"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "Блок",
+          "payload": ""
+        },
+        "color": "secondary"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "Ао",
+          "payload": ""
+        },
+        "color": "secondary"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "Оа",
+          "payload": ""
+        },
+        "color": "secondary"
+      }
+    ]
+  ],
+
+
+  "inline": true
+}

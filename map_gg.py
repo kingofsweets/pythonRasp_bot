@@ -40,14 +40,51 @@ def coloring(point, color, draw, value):
             finec.append(int(colore))
 
         draw.rectangle((first_coord - 200, second_coord - 200, first_coord, second_coord),
-                        fill=(finec[0], finec[1], finec[2], 110))
+                       fill=(finec[0], finec[1], finec[2], 110))
     else:
 
         font = ImageFont.truetype('media/fonts/20170.ttf', 50)
-        draw.text((first_coord - 190, second_coord - 190),str(color),
-                           fill= ImageColor.getrgb('black'),font = font)
+        draw.text((first_coord - 190, second_coord - 190), str(color),
+                  fill=ImageColor.getrgb('black'), font=font)
 
     return draw
+
+
+def coloring_enem(point, temp, element):
+    points_f = {
+        "A": 100,
+        "B": 200,
+        "C": 300,
+        "D": 400,
+        "E": 500,
+        "F": 600,
+        "G": 700,
+        "H": 800,
+        "I": 900,
+        "J": 1000,
+    }
+    points_s = {
+        "1": 100,
+        "2": 200,
+        "3": 300,
+        "4": 400,
+        "5": 500,
+        "6": 600,
+        "7": 700,
+        "8": 800,
+        "9": 900,
+        "10": 1000,
+    }
+    if len(point) > 2:
+        first_coord = points_f[point[0]]
+        second_coord = points_s[point[1] + point[2]]
+    else:
+        first_coord = points_f[point[0]]
+        second_coord = points_s[point[1]]
+
+    temp.paste(element, (first_coord - 100, second_coord - 100), element)
+
+    return temp
 
 
 def map_gen():
@@ -75,3 +112,34 @@ def map_gen_forbuy():
     temp.save('temp_of_map_gen_forbuy.png')
 
 
+def genering_dynamics_map():
+    pass
+
+
+def draw_player_ic(idc, name):
+    print(name)
+    sac = Image.new('RGB', (100, 100))
+    wo = name[0] + name[1]
+    draw = ImageDraw.Draw(sac)
+
+    font = ImageFont.truetype('media/fonts/19718.ttf', 75)
+    draw.text((5,5),wo , font=font)
+
+    sac.save(f'{idc}.png')
+
+
+def map_gen_for_now():
+    players = INFO_STATUS.getter_members_for_gen()
+    mobs = INFO_STATUS.getter_enem()
+    temp = Image.open('media/temp_of_map_demon.png', 'r')
+
+    for player in players:
+        draw_player_ic(player.id, player.name)
+        temp_playeer = Image.open(f'{player.id}.png', 'r').convert('RGBA')
+        coloring_enem(player.pointnow, temp, temp_playeer)
+    for mob in mobs:
+        file = 'media/enemies/mini/' + mob.file_i
+        temp_enem = Image.open(file, 'r').convert('RGBA')
+        coloring_enem(mob.pointnow, temp, temp_enem)
+
+    temp.save('temp_of_map_demon_gen.png')

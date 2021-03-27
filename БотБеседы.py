@@ -2,9 +2,9 @@ import random
 import time
 import re
 import easy_logic
-
+import enemy
 import threading
-
+import os
 import vk_api
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 from vk_api.keyboard import VkKeyboard, VkKeyboardColor
@@ -27,7 +27,21 @@ def upp_money():
         for chel in maimes:
             INFO_STATUS.refactor_member('coins', chel.coins + chel.improve * chel.lvl // 10, chel.id)
             if chel.energy < easy_logic.max_energy(chel.lvl):
-                INFO_STATUS.refactor_member('energy', chel.energy + 5*(chel.lvl+1), chel.id)
+                INFO_STATUS.refactor_member('energy', chel.energy + 5 * (chel.lvl + 1), chel.id)
+
+
+def decris_calld():
+    while True:
+        time.sleep(1)
+        maimes = INFO_STATUS.getter_members()
+        for chel in maimes:
+            if chel.time_calld != 0 and chel.state != 1:
+                print(chel.time_calld)
+                INFO_STATUS.refactor_member('time_calld', chel.time_calld - 1, chel.id)
+                if chel.time_calld - 1 == 0:
+                    send_message(1, f'Кулдаун у @id{chel.id}({chel.name}) снят')
+                    send_messageklava(1, 'Выберите куда пойти:', "keyboards/go_p"
+                                                                 ".json")
 
 
 def upload_photo(name):
@@ -38,6 +52,12 @@ def upload_photo(name):
     access_key = photo[0]['access_key']
     attachment = f'photo{owner_id}_{photo_id}_{access_key}'
     return attachment
+
+
+# def upload_graffity(name):
+#     upload = vk_api.VkUpload(vk)
+#     photo = upload.graffiti(name)
+#     print(photo)
 
 
 def send_messageklava(peer_id, message, klava):
@@ -71,14 +91,265 @@ def main_conept():
         if event.type == VkBotEventType.MESSAGE_NEW:
 
             if event.from_chat:
+                print(event.obj)
+                try:
+                    if event.obj['action']['type'] == 'chat_invite_user':
+                        send_message(event.chat_id,
+                                     f"Приветствуем @id{event.obj['action']['member_id']}(Безымянного) в "
+                                     f"этом "
+                                     f"довольно незавысловатом мире. Пусть в приключениях его сопровождает"
+                                     f" исключительно удача.")
+                        a = Infochar()
+                        a.id = event.obj['action']['member_id']
+                        a.saver()
+                        send_message(event.chat_id, 'Аккаунт приключенца создан')
+
+                    if event.obj['action']['type'] == 'chat_kick_user':
+                        send_message(event.chat_id,
+                                     f"@id{event.obj['action']['member_id']}(Покидающий) был хорошим малым "
+                                     f"пусть его в собственных свержениях сопровождает чистый успех.")
+                        INFO_STATUS.delete_member(event.obj['action']['member_id'])
+                        points = INFO_STATUS.getter_map_for_draw()
+                        for point in points:
+                            if point.owner_id == event.obj['action']['member_id']:
+                                INFO_STATUS.delete_point(point.owner_id)
+                        send_message(event.chat_id, 'Аккаунт приключенца уничтожен')
+                except KeyError:
+                    print('action')
                 message = event.obj['text'].lower()
                 if '[club198702757|@club198702757]' in message:
                     message = message.replace('[club198702757|@club198702757] ', '')
-                    print(message)
                 else:
                     message = message.replace('[club198702757|тайное общество ктбо 1-3] ', '')
 
-                print(event.object)
+                if message == 'пойти на охоту':
+                    maimes = INFO_STATUS.getter_members()
+                    for chel in maimes:
+                        if chel.id == event.obj['from_id']:
+                            if chel.pointnow == '0':
+                                send_message(event.chat_id, 'Происходит телепортация в земли зла. Приготовьте очко.')
+                                INFO_STATUS.refactor_member('pointnow', easy_logic.gen_pos(), chel.id)
+
+                                map_gg.map_gen_for_now()
+                                gen_link = upload_photo('temp_of_map_demon_gen.png')
+                                send_messagept(event.chat_id, 'Вы тута: 🪐Пивная застава демонов🪐', gen_link)
+                            else:
+                                send_message(event.chat_id, 'Чел, ты уже тепа на карте.')
+
+                if message == 'показать локацию':
+                    map_gg.map_gen_for_now()
+                    gen_link = upload_photo('temp_of_map_demon_gen.png')
+                    send_messagept(event.chat_id, '🪐Пивная застава демонов🪐', gen_link)
+                    send_messageklava(3, 'Выберите куда пойти:', "keyboards/go_p"
+                                                                 ".json")
+
+                if message == 'вперёд':
+                    maimes = INFO_STATUS.getter_members()
+                    for chel in maimes:
+                        if chel.id == event.obj['from_id']:
+                            if chel.pointnow == '0':
+                                send_message(event.chat_id, 'Вы не на охоте')
+                                continue
+                            if chel.state == 1:
+                                send_message(event.chat_id, 'Вы в бою!')
+                                continue
+                            if chel.time_calld == 0:
+                                pos = easy_logic.up(chel.pointnow)
+                                if pos != chel.pointnow:
+                                    INFO_STATUS.refactor_member('pointnow', pos, chel.id)
+                                    enemies = INFO_STATUS.getter_enem_for_gen()
+                                    for mob in enemies:
+                                        mob.random_go()
+                                    map_gg.map_gen_for_now()
+                                    gen_link = upload_photo('temp_of_map_demon_gen.png')
+                                    send_messagept(event.chat_id, '🪐Пивная застава демонов🪐', gen_link)
+                                    INFO_STATUS.refactor_member('time_calld', 7, chel.id)
+                                    send_message(event.chat_id, 'Вы остановленны на 7 секунд')
+                                    easy_logic.get_chek()
+                                    chel_peop = INFO_STATUS.getter_members()
+                                    for sa in chel_peop:
+                                        if sa.id == chel.id:
+                                            if sa.state == 1:
+                                                send_message(event.chat_id, 'На вас напали!')
+                                                vrag = INFO_STATUS.getter_enem()
+                                                for mob in vrag:
+                                                    if sa.id_enem == mob.id:
+                                                        enemy.draw_enem_info(mob.name, mob.hp, 0, mob.file_m,
+                                                                             mob.id)
+                                                        gen_link = upload_photo(mob.id + '.jpg')
+                                                        send_messagept(event.chat_id, f'{mob.name}', gen_link)
+                                                        send_messageklava(3, 'Выберите действие:', "keyboards/action"
+                                                                                                   ".json")
+
+
+                                else:
+                                    send_message(event.chat_id, 'Вверху прохода нету.')
+                            else:
+                                send_message(event.chat_id, f'Вы не можете ходить ещё {chel.time_calld} секунд')
+
+                if message == 'назад':
+                    maimes = INFO_STATUS.getter_members()
+                    for chel in maimes:
+                        if chel.id == event.obj['from_id']:
+                            if chel.pointnow == '0':
+                                send_message(event.chat_id, 'Вы не на охоте')
+                                continue
+                            if chel.state == 1:
+                                send_message(event.chat_id, 'Вы в бою!')
+                                continue
+                            if chel.time_calld == 0:
+                                pos = easy_logic.down(chel.pointnow)
+                                if pos != chel.pointnow:
+                                    INFO_STATUS.refactor_member('pointnow', pos, chel.id)
+                                    enemies = INFO_STATUS.getter_enem_for_gen()
+                                    for mob in enemies:
+                                        mob.random_go()
+                                    map_gg.map_gen_for_now()
+                                    gen_link = upload_photo('temp_of_map_demon_gen.png')
+                                    send_messagept(event.chat_id, '🪐Пивная застава демонов🪐', gen_link)
+                                    INFO_STATUS.refactor_member('time_calld', 7, chel.id)
+                                    send_message(event.chat_id, 'Вы остановленны на 7 секунд')
+                                    easy_logic.get_chek()
+                                    chel_peop = INFO_STATUS.getter_members()
+                                    for sa in chel_peop:
+                                        if sa.id == chel.id:
+                                            if sa.state == 1:
+                                                send_message(event.chat_id, 'На вас напали!')
+                                                vrag = INFO_STATUS.getter_enem()
+                                                for mob in vrag:
+                                                    if sa.id_enem == mob.id:
+                                                        enemy.draw_enem_info(mob.name, mob.hp, 0, mob.file_m,
+                                                                             mob.id)
+                                                        gen_link = upload_photo(mob.id + '.jpg')
+                                                        send_messagept(event.chat_id, f'{mob.name}', gen_link)
+                                                        send_messageklava(3, 'Выберите действие:', "keyboards/action"
+                                                                                                   ".json")
+
+                                else:
+                                    send_message(event.chat_id, 'Внизу прохода нету.')
+                            else:
+                                send_message(event.chat_id, f'Вы не можете ходить ещё {chel.time_calld} секунд')
+
+                if message == 'вправо':
+                    maimes = INFO_STATUS.getter_members()
+                    for chel in maimes:
+                        if chel.id == event.obj['from_id']:
+                            if chel.pointnow == '0':
+                                send_message(event.chat_id, 'Вы не на охоте')
+                                continue
+                            if chel.state == 1:
+                                send_message(event.chat_id, 'Вы в бою!')
+                                continue
+                            if chel.time_calld == 0:
+                                pos = easy_logic.right(chel.pointnow)
+                                if pos != chel.pointnow:
+                                    INFO_STATUS.refactor_member('pointnow', pos, chel.id)
+                                    enemies = INFO_STATUS.getter_enem_for_gen()
+                                    for mob in enemies:
+                                        mob.random_go()
+                                    map_gg.map_gen_for_now()
+                                    gen_link = upload_photo('temp_of_map_demon_gen.png')
+                                    send_messagept(event.chat_id, '🪐Пивная застава демонов🪐', gen_link)
+                                    INFO_STATUS.refactor_member('time_calld', 7, chel.id)
+                                    send_message(event.chat_id, 'Вы остановленны на 7 секунд')
+                                    easy_logic.get_chek()
+                                    chel_peop = INFO_STATUS.getter_members()
+                                    for sa in chel_peop:
+                                        if sa.id == chel.id:
+                                            if sa.state == 1:
+                                                send_message(event.chat_id, 'На вас напали!')
+                                                vrag = INFO_STATUS.getter_enem()
+                                                for mob in vrag:
+                                                    if sa.id_enem == mob.id:
+                                                        enemy.draw_enem_info(mob.name, mob.hp, 0, mob.file_m,
+                                                                             mob.id)
+                                                        gen_link = upload_photo(mob.id + '.jpg')
+                                                        send_messagept(event.chat_id, f'{mob.name}', gen_link)
+                                                        send_messageklava(3, 'Выберите действие:', "keyboards/action"
+                                                                                                   ".json")
+
+                                else:
+                                    send_message(event.chat_id, 'Справа прохода нету.')
+                            else:
+                                send_message(event.chat_id, f'Вы не можете ходить ещё {chel.time_calld} секунд')
+
+                if message == 'влево':
+                    maimes = INFO_STATUS.getter_members()
+                    for chel in maimes:
+                        if chel.id == event.obj['from_id']:
+                            if chel.pointnow == '0':
+                                send_message(event.chat_id, 'Вы не на охоте')
+                                continue
+                            if chel.state == 1:
+                                send_message(event.chat_id, 'Вы в бою!')
+                                continue
+                            if chel.time_calld == 0:
+                                pos = easy_logic.left(chel.pointnow)
+                                if pos != chel.pointnow:
+                                    INFO_STATUS.refactor_member('pointnow', pos, chel.id)
+                                    enemies = INFO_STATUS.getter_enem_for_gen()
+                                    for mob in enemies:
+                                        mob.random_go()
+                                    map_gg.map_gen_for_now()
+                                    gen_link = upload_photo('temp_of_map_demon_gen.png')
+                                    send_messagept(event.chat_id, '🪐Пивная застава демонов🪐', gen_link)
+                                    INFO_STATUS.refactor_member('time_calld', 7, chel.id)
+                                    send_message(event.chat_id, 'Вы остановленны на 7 секунд')
+                                    easy_logic.get_chek()
+                                    chel_peop = INFO_STATUS.getter_members()
+                                    for sa in chel_peop:
+                                        if sa.id == chel.id:
+                                            if sa.state == 1:
+                                                send_message(event.chat_id, 'На вас напали!')
+                                                vrag = INFO_STATUS.getter_enem()
+                                                for mob in vrag:
+                                                    if sa.id_enem == mob.id:
+                                                        enemy.draw_enem_info(mob.name, mob.hp, 0, mob.file_m,
+                                                                             mob.id)
+                                                        gen_link = upload_photo(mob.id + '.jpg')
+                                                        send_messagept(event.chat_id, f'{mob.name}', gen_link)
+                                                        send_messageklava(3, 'Выберите действие:', "keyboards/action"
+                                                                                                   ".json")
+
+                                else:
+                                    send_message(event.chat_id, 'Слева прохода нету.')
+                            else:
+                                send_message(event.chat_id, f'Вы не можете ходить ещё {chel.time_calld} секунд')
+
+                if message == 'покинуть охоту':
+                    maimes = INFO_STATUS.getter_members()
+                    for chel in maimes:
+                        if chel.id == event.obj['from_id']:
+                            if chel.state != 1:
+                                INFO_STATUS.refactor_member('pointnow', '0', chel.id)
+                                send_message(event.chat_id, 'Вы успешно покинули землю.')
+
+                if message == 'атака':
+                    maimes = INFO_STATUS.getter_members()
+                    vrag = INFO_STATUS.getter_enem()
+                    for chel in maimes:
+                        if chel.id == event.obj['from_id']:
+                            if chel.state == 1:
+                                for mob in vrag:
+                                    if chel.id_enem == mob.id:
+                                        if mob.hp - chel.attack <= 0:
+                                            INFO_STATUS.refactor_member('state', 0, chel.id)
+                                            INFO_STATUS.refactor_member('id_enem', 0, chel.id)
+                                            send_message(event.chat_id, 'Моб убит')
+                                            INFO_STATUS.delete_enem(mob.id)
+                                            os.remove(f'{mob.id}.jpg')
+                                            vrag = INFO_STATUS.getter_enem()
+                                            if len(vrag) <= 3:
+                                                INFO_STATUS.gen_enemies()
+                                        else:
+                                            INFO_STATUS.refactor_enem('hp', mob.hp - chel.attack, mob.id)
+                                            enemy.draw_enem_info(mob.name, mob.hp - chel.attack, 0, mob.file_m,
+                                                                 mob.id)
+                                            gen_link = upload_photo(mob.id + '.jpg')
+                                            send_messagept(event.chat_id, f'{mob.name}', gen_link)
+                                            send_messageklava(event.chat_id, 'Выберите действие:', "keyboards/action"
+                                                                                                   ".json")
+
                 if message == '💜кто гей?💜':
                     maimes = INFO_STATUS.getter_members()
                     for chel in maimes:
@@ -90,7 +361,7 @@ def main_conept():
                                 send_message(event.chat_id, f'@id{owner.id}({owner.name}) потратился аж на 30 падших '
                                                             f'монет ради '
                                                             f'гейства')
-                                members = vk.messages.getConversationMembers(peer_id=2000000001, group_id=198702757)[
+                                members = vk.messages.getConversationMembers(peer_id=2000000000 + event.chat_id)[
                                     'items']
                                 members_ids = [member['member_id'] for member in members if member['member_id'] > 0]
                                 idm = random.randint(0, len(members_ids) - 1)
@@ -130,7 +401,7 @@ def main_conept():
                                 send_message(event.chat_id, f'@id{owner.id}({owner.name}) потратился аж на 300 падших '
                                                             f'монет ради '
                                                             f'Пивного удовольствия')
-                                members = vk.messages.getConversationMembers(peer_id=2000000001, group_id=198702757)[
+                                members = vk.messages.getConversationMembers(peer_id=2000000000 + event.chat_id)[
                                     'items']
                                 members_ids = [member['member_id'] for member in members if member['member_id'] > 0]
                                 send_message(event.chat_id, 'Вас понял, господин...')
@@ -166,12 +437,12 @@ def main_conept():
                             send_message(event.chat_id, predsm[random_preds])
                             random_coins = random.randint(-180, 45)
                             INFO_STATUS.refactor_member('coins', chel.coins + random_coins, chel.id)
-                            send_message(event.chat_id,'Идите работать!')
+                            send_message(event.chat_id, 'Идите работать!')
                             send_message(event.chat_id,
                                          f'Предсказание завело его в недра деньжат. @id{chel.id}({chel.name}) получает {random_coins} рубасиков')
 
                 elif message == 'update_members':
-                    members = vk.messages.getConversationMembers(peer_id=2000000001, group_id=198702757)['items']
+                    members = vk.messages.getConversationMembers(peer_id=2000000000 + event.chat_id)['items']
                     members_ids = [member['member_id'] for member in members if member['member_id'] > 0]
                     for id in members_ids:
                         a = Infochar()
@@ -208,7 +479,7 @@ def main_conept():
                             Получая при этом 💎{chel.improve}💎 монет в минуту.
                             Ваши характеристики следующие:\n
                             Уровень @id{chel.id}({chel.name}): {chel.lvl}   |||  Опыт:🔰{chel.xp}/{easy_logic.lvl_formula(chel.lvl)}🔰
-                            Энергия 💚{chel.energy}/{easy_logic.max_energy(chel.lvl)}💚 ({5*chel.lvl} в минуту)
+                            Энергия 💚{chel.energy}/{easy_logic.max_energy(chel.lvl)}💚 ({5 * (chel.lvl + 1)} в минуту)
 
 
                             """
@@ -268,7 +539,8 @@ def main_conept():
                                                 INFO_STATUS.refactor_map('color', color, point)
                                             INFO_STATUS.refactor_member('count_event', chel.count_events + 1, chel.id)
                                             INFO_STATUS.refactor_member('improve_money',
-                                                                        (chel.improve + (pk.cost / 1000))*chel.lvl, chel.id)
+                                                                        (chel.improve + (pk.cost / 1000)) * chel.lvl,
+                                                                        chel.id)
 
                                             send_message(event.chat_id,
                                                          f'Теперь ваш доход составляет:{(chel.improve + (pk.cost / 1000))} (рубли/минута)')
@@ -286,7 +558,7 @@ def main_conept():
                     name = message.replace('сменить профессию на ', '')
                     name = name.title()
                     id = event.obj['from_id']
-                    if name == 'Алхимик' or name == 'Ремесленник' or name == 'Повар'  or name == 'Учитель Немецкого':
+                    if name == 'Алхимик' or name == 'Ремесленник' or name == 'Повар' or name == 'Учитель Немецкого':
                         INFO_STATUS.refactor_member(property='class', value=name, id=id)
                         send_message(event.chat_id, f'Успешно изменена профессия чела @id{id} на {name}')
                     else:
@@ -296,17 +568,17 @@ def main_conept():
                     maimes = INFO_STATUS.getter_members()
                     for chel in maimes:
                         if chel.id == event.obj['from_id']:
-                            if chel.energy - 30 > 0:
-                                energy = chel.energy - 30
+                            if chel.energy - (chel.lvl + 1) * 30 > 0:
+                                energy = chel.energy - (chel.lvl + 1) * 30
                                 INFO_STATUS.refactor_member('energy', energy, chel.id)
                                 xp = random.randint((chel.lvl + 1) * 150, (chel.lvl + 1) * 500)
                                 INFO_STATUS.refactor_member('xp', chel.xp + xp, chel.id)
                                 info = f"""
                                 🎯Работа🎯 {chel.classs}а очень тяжела, порой она заставляет взглянуть на мир по-другому.
                                 @id{chel.id}({chel.name}) работал сегодня очень усрендно и получил {xp} опыта.
-                                При этом он потратил 30 энергии. У него осталось только 💚{energy}💚 энерии .
+                                При этом он потратил 💚{(chel.lvl + 1) * 30}💚 энергии. У него осталось только 💚{energy}💚 энерии .
                                                                                         """
-                                money = random.randint((chel.lvl + 1) * 3, (chel.lvl + 1) * 25)
+                                money = random.randint((chel.lvl + 1) * 3, (chel.lvl + 1) * 100)
                                 INFO_STATUS.refactor_member('coins', chel.coins + money, chel.id)
                                 if money < ((chel.lvl + 1) * 3 + (chel.lvl + 1) * 25) // 2:
                                     info_2 = f'Однако начальник его не взлюбил, поэтому дал всего лишь 💰{money}💰 падших рублей.'
@@ -319,6 +591,8 @@ def main_conept():
                                 if chel.xp + xp >= easy_logic.lvl_formula(chel.lvl):
                                     send_message(event.chat_id, f'🏆Уровень повышен до {chel.lvl + 1}🏆')
                                     INFO_STATUS.refactor_member('lvl', chel.lvl + 1, chel.id)
+                                    send_message(event.chat_id, f'💚Энергия полностью восстановлена💚')
+                                    INFO_STATUS.refactor_member('energy', easy_logic.max_energy(chel.lvl), chel.id)
                             else:
                                 send_message(event.chat_id, f'💚Недостаточно энергии💚')
 
@@ -357,13 +631,17 @@ def main_conept():
                     send_messagept(event.chat_id, 'Держите', 'photo-198702757_457239079')
 
 
-try:
-    opa = threading.Thread(target=upp_money)
-    opa.start()
-    bot_session = vk_api.VkApi(
-        token="448a161c4370d920f09782b8ea67453e58f64ebe60444d3a6e3c99de30c1f6214ff9e838e3f713e7ee246")
-    vk = bot_session.get_api()
-    longpoll = VkBotLongPoll(bot_session, 198702757)
-    main_conept()
-except BaseException:
-    print('reccccc')
+while True:
+    try:
+        opa = threading.Thread(target=upp_money)
+        opa.start()
+
+        opa1 = threading.Thread(target=decris_calld)
+        opa1.start()
+        bot_session = vk_api.VkApi(
+            token="448a161c4370d920f09782b8ea67453e58f64ebe60444d3a6e3c99de30c1f6214ff9e838e3f713e7ee246")
+        vk = bot_session.get_api()
+        longpoll = VkBotLongPoll(bot_session, 198702757)
+        main_conept()
+    except BaseException:
+        print('RDS')
