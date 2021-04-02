@@ -4,32 +4,34 @@
       {
         "action": {
           "type": "text",
-          "label": "⚒Профессии⚒",
+          "label": "⚗Алхимик⚗",
           "payload": ""
         },
-        "color": "primary"
+        "color": "secondary"
       }
     ],
     [
       {
         "action": {
           "type": "text",
-          "label": "\uD83C\uDFDEЗемли\uD83C\uDFDE",
+          "label": "\uD83D\uDCD9Учитель Немецкого\uD83D\uDCD9",
           "payload": ""
         },
-        "color": "primary"
+        "color": "secondary"
       }
     ],
     [
       {
         "action": {
           "type": "text",
-          "label": "\uD83D\uDD30Уровень/ресурсы\uD83D\uDD30",
+          "label": "\uD83D\uDCB0Торговец\uD83D\uDCB0",
           "payload": ""
         },
-        "color": "primary"
+        "color": "secondary"
       }
     ]
   ],
+
+
   "inline": true
 }

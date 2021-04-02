@@ -4,7 +4,7 @@
       {
         "action": {
           "type": "text",
-          "label": "⬆Вперёд⬆",
+          "label": "\uD83C\uDF7BТаверна\uD83C\uDF7B",
           "payload": ""
         },
         "color": "secondary"
@@ -14,7 +14,7 @@
       {
         "action": {
           "type": "text",
-          "label": "⬇Назад⬇",
+          "label": "\uD83C\uDFEAЛавка\uD83C\uDFEA",
           "payload": ""
         },
         "color": "secondary"
@@ -24,7 +24,7 @@
       {
         "action": {
           "type": "text",
-          "label": "⬅Влево⬅",
+          "label": "⚔Пойти на охоту⚔",
           "payload": ""
         },
         "color": "secondary"
@@ -34,24 +34,12 @@
       {
         "action": {
           "type": "text",
-          "label": "➡Вправо➡",
-          "payload": ""
-        },
-        "color": "secondary"
-      }
-    ],
-    [
-      {
-        "action": {
-          "type": "text",
-          "label": "\uD83E\uDDB6Покинуть охоту\uD83E\uDDB6",
+          "label": "⚒Работать⚒",
           "payload": ""
         },
         "color": "secondary"
       }
     ]
   ],
-
-
   "inline": true
 }

@@ -9,26 +9,6 @@
         },
         "color": "secondary"
       }
-    ],
-    [
-      {
-        "action": {
-          "type": "text",
-          "label": "Сменить тип участка",
-          "payload": ""
-        },
-        "color": "secondary"
-      }
-    ],
-    [
-      {
-        "action": {
-          "type": "text",
-          "label": "Улучшить участок",
-          "payload": ""
-        },
-        "color": "primary"
-      }
     ]
   ],
 

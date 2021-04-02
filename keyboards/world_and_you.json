@@ -4,16 +4,6 @@
       {
         "action": {
           "type": "text",
-          "label": "Глоссарий по боту",
-          "payload": ""
-        },
-        "color": "primary"
-      }
-    ],
-    [
-      {
-        "action": {
-          "type": "text",
           "label": "\uD83D\uDD2EУзнать судьбу\uD83D\uDD2E",
           "payload": ""
         },
@@ -24,7 +14,7 @@
       {
         "action": {
           "type": "text",
-          "label": "Сменить профессию",
+          "label": "⚒Сменить профессию⚒",
           "payload": ""
         },
         "color": "secondary"
@@ -44,7 +34,7 @@
       {
         "action": {
           "type": "text",
-          "label": "\uD83C\uDFADКто я?\uD83C\uDFAD",
+          "label": "\uD83D\uDCDCУправление землёй\uD83D\uDCDC",
           "payload": ""
         },
         "color": "secondary"

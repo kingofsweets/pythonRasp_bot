@@ -4,7 +4,7 @@
       {
         "action": {
           "type": "text",
-          "label": "Атака",
+          "label": "\uD83D\uDDE1Атака\uD83D\uDDE1",
           "payload": ""
         },
         "color": "secondary"
@@ -14,7 +14,7 @@
       {
         "action": {
           "type": "text",
-          "label": "Блок",
+          "label": "\uD83D\uDEE1Блок\uD83D\uDEE1",
           "payload": ""
         },
         "color": "secondary"
@@ -24,7 +24,7 @@
       {
         "action": {
           "type": "text",
-          "label": "Ао",
+          "label": "\uD83E\uDDB6Сбежать\uD83E\uDDB6",
           "payload": ""
         },
         "color": "secondary"
@@ -34,7 +34,7 @@
       {
         "action": {
           "type": "text",
-          "label": "Оа",
+          "label": "\uD83D\uDCBCИнвентарь\uD83D\uDCBC",
           "payload": ""
         },
         "color": "secondary"

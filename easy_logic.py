@@ -16,6 +16,16 @@ def max_energy(lvl):
     return energy
 
 
+def max_hp(lvl):
+    hp = (lvl + 1) * 100
+    return hp
+
+
+def enem_mhp(lvl):
+    hp = (lvl + 1) * 150
+    return hp
+
+
 def gen_pos():
     first_point = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
     second_point = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
@@ -175,8 +185,43 @@ def get_chek():
 
         for pos in pos_to_check:
             for men in mens:
-                if men.pointnow == pos:
+                if men.pointnow == pos and men.state != 1:
                     INFO_STATUS.refactor_member('state', 1, men.id)
                     INFO_STATUS.refactor_member('id_enem', enemy.id, men.id)
                     INFO_STATUS.refactor_enem('state', 1, enemy.id)
                     break
+
+
+def rand_energy(lvl):
+    energy = random.randint((lvl + 1), (lvl + 2) * 2)
+    return energy
+
+
+def rand_attack(attack, lvl, energy):
+    energy_coaff = energy / max_energy(lvl)
+    damage = random.randint(attack * (lvl + 1), attack * (lvl + 2))
+    damage = energy_coaff * damage
+    return damage
+
+
+def rand_defffe(defence, lvl, energy):
+    energy_coaff = energy / max_energy(lvl)
+    damage = random.randint(defence * lvl, defence * (lvl + 1))
+    damage = energy_coaff * damage
+    return damage
+
+
+def cost_res(lvl):
+    lvl_next = lvl + 1
+    res = 100
+    for lvl_n in range(lvl_next):
+        res = res + 20 * lvl_n * lvl_n
+    return res
+
+
+def cost_con(lvl):
+    lvl_next = lvl + 1
+    con = 10
+    for lvl_n in range(lvl_next):
+        con = con + 1000 * lvl_n * lvl_n * lvl_n
+    return con

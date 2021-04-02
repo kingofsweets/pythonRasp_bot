@@ -41,9 +41,14 @@ def coloring(point, color, draw, value):
 
         draw.rectangle((first_coord - 200, second_coord - 200, first_coord, second_coord),
                        fill=(finec[0], finec[1], finec[2], 110))
-    else:
+    elif value == 1:
 
         font = ImageFont.truetype('media/fonts/20170.ttf', 50)
+        draw.text((first_coord - 190, second_coord - 190), str(color),
+                  fill=ImageColor.getrgb('black'), font=font)
+    elif value == 2:
+
+        font = ImageFont.truetype('media/fonts/19718.ttf', 170)
         draw.text((first_coord - 190, second_coord - 190), str(color),
                   fill=ImageColor.getrgb('black'), font=font)
 
@@ -94,6 +99,7 @@ def map_gen():
     draw = ImageDraw.Draw(colori)
     for point in points:
         coloring(point.point, point.color, draw, 0)
+        coloring(point.point, point.lvl, draw, 2)
 
     out = Image.alpha_composite(temp, colori)
 
@@ -108,6 +114,7 @@ def map_gen_forbuy():
     draw = ImageDraw.Draw(temp)
     for point in points:
         coloring(point.point, point.cost, draw, 1)
+
 
     temp.save('temp_of_map_gen_forbuy.png')
 

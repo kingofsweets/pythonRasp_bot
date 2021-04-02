@@ -4,7 +4,7 @@
       {
         "action": {
           "type": "text",
-          "label": "⬆Вперёд⬆",
+          "label": "❤Использовать зелье❤",
           "payload": ""
         },
         "color": "secondary"
@@ -14,7 +14,7 @@
       {
         "action": {
           "type": "text",
-          "label": "⬇Назад⬇",
+          "label": "\uD83D\uDC9AИспользовать зелье\uD83D\uDC9A",
           "payload": ""
         },
         "color": "secondary"
@@ -24,7 +24,7 @@
       {
         "action": {
           "type": "text",
-          "label": "⬅Влево⬅",
+          "label": "\uD83C\uDF7AИспользовать пиво\uD83C\uDF7A",
           "payload": ""
         },
         "color": "secondary"
@@ -34,17 +34,7 @@
       {
         "action": {
           "type": "text",
-          "label": "➡Вправо➡",
-          "payload": ""
-        },
-        "color": "secondary"
-      }
-    ],
-    [
-      {
-        "action": {
-          "type": "text",
-          "label": "\uD83E\uDDB6Покинуть охоту\uD83E\uDDB6",
+          "label": "✨Использовать зелье✨",
           "payload": ""
         },
         "color": "secondary"

@@ -34,7 +34,7 @@
       {
         "action": {
           "type": "text",
-          "label": "⚒Работать⚒",
+          "label": "\uD83C\uDFB5Заказать песню\uD83C\uDFB5",
           "payload": ""
         },
         "color": "secondary"
@@ -44,22 +44,13 @@
       {
         "action": {
           "type": "text",
-          "label": "Учиться",
-          "payload": ""
-        },
-        "color": "secondary"
-      }
-    ],
-    [
-      {
-        "action": {
-          "type": "text",
-          "label": "Продать ресурсы",
+          "label": "\uD83D\uDCACПоговорить с трактирщиком\uD83D\uDCAC",
           "payload": ""
         },
         "color": "secondary"
       }
     ]
+
   ],
 
 

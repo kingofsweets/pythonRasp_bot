@@ -30,6 +30,7 @@ def getter_members_for_gen():
             a.id = member[1]
             a.time_calld = member[16]
             a.pointnow = member[12]
+            a.lvl = member[4]
 
             members.append(a)
     return members
@@ -51,6 +52,7 @@ def getter_enem():
         a.file_m = enem[6]
         a.file_i = enem[7]
         a.id = enem[8]
+        a.lvl = enem[10]
 
         enemies.append(a)
     return enemies
@@ -104,6 +106,13 @@ def getter_members():
         a.time_calld = member[16]
         a.state = member[17]
         a.id_enem = member[18]
+        a.h_c = member[19]
+        a.en_c = member[20]
+        a.b_c = member[21]
+        a.r_c = member[22]
+        a.ex_c = member[23]
+        a.piv_calld = member[24]
+        a.event_lvl = member[25]
 
         members.append(a)
     return members
@@ -122,6 +131,7 @@ def getter_map_for_draw():
             a.owner_id = point[2]
             a.color = point[3]
             a.cost = point[4]
+            a.lvl = point[5]
             points.append(a)
     return points
 
@@ -139,6 +149,7 @@ def getter_map_for_buy():
             a.owner_id = point[2]
             a.color = point[3]
             a.cost = point[4]
+            a.lvl = point[5]
             points.append(a)
     return points
 
@@ -155,6 +166,7 @@ def getter_map_all():
         a.owner_id = point[2]
         a.color = point[3]
         a.cost = point[4]
+        a.lvl = point[5]
         points.append(a)
     return points
 
@@ -227,6 +239,13 @@ class Infochar():
     time_calld = 0
     state = 0
     id_enem = 0
+    h_c = 0
+    en_c = 0
+    b_c = 0
+    r_c = 0
+    ex_c = 0
+    piv_calld = 0
+    event_lvl = 0
 
     def saver(self):
         db = sqlite3.connect('info_pan.db')
@@ -248,6 +267,7 @@ class MAP:
     status = 'none'
     owner_id = 0
     cost = 450
+    lvl = 0
 
     def saver(self):
         db = sqlite3.connect('info_pan.db')
@@ -280,6 +300,7 @@ class Enemy:
     name = ''
     id = ''
     pointnow = 0
+    lvl = 0
     step = 1
     attack = 10
     defence = 15
@@ -291,8 +312,8 @@ class Enemy:
     def saver(self):
         db = sqlite3.connect('info_pan.db')
         cursor = db.cursor()
-        cursor.execute(f"""INSERT INTO enemy(name, id, point_now, file_m, file_i)
-                        VALUES('{self.name}','{self.id}','{self.pointnow}','{self.file_m}','{self.file_i}')
+        cursor.execute(f"""INSERT INTO enemy(name, id, point_now, file_m, file_i, lvl, hp)
+                        VALUES('{self.name}','{self.id}','{self.pointnow}','{self.file_m}','{self.file_i}','{self.lvl}', '{self.hp}')
         """)
         db.commit()
         db.close()
@@ -328,20 +349,32 @@ def gen_rand_pos():
 
     if flag == 0:
         return f_pos + s_pos
-    else:
-        gen_rand_pos()
 
 
 def gen_enemies():
     enemys = getter_enem()
-    ids = []
+    memba = getter_members_for_gen()
+    lvlur = 0
+    min_lvl = 100
+    cot = 0
+    for memb in memba:
+        lvlur += memb.lvl
+        print(f'Уровень: {memb.lvl}')
+        if memb.lvl < min_lvl:
+            min_lvl = memb.lvl
+        cot = cot + 1
+    sred_lvl = int(lvlur / cot)
+    print(min_lvl)
+
     name_s = ['Горный путешественник', 'Вор диких земель', 'Каменщик', 'Призываетльница демонов', 'Падший палач']
     for i in range(3):
         name = random.randint(0, 4)
         f_i = f'{name + 1}var_m.png'
         f_m = f'{name + 1}var.jpg'
         name = name_s[name]
-        pos = gen_rand_pos()
+        pos = None
+        while pos is None:
+            pos = gen_rand_pos()
         a = Enemy()
         a.name = name
         rans = list(range(0, 200))
@@ -349,8 +382,17 @@ def gen_enemies():
             idem = mob.id.replace('a', '')
             rans.remove(int(idem))
         a.id = 'a' + str(secrets.choice(rans))
-        a.pointnow = pos
+        if pos is not None:
+            a.pointnow = pos
+        else:
+            a.pointnow = 'A1'
         a.file_m = f_m
         a.file_i = f_i
+        lvl = random.randint(min_lvl, sred_lvl + 1)
+        print(lvl)
+        a.lvl = lvl
+        a.hp = easy_logic.enem_mhp(a.lvl)
 
         a.saver()
+
+

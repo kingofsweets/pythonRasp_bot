@@ -4,7 +4,7 @@
       {
         "action": {
           "type": "text",
-          "label": "\uD83D\uDCACСоциальный актив\uD83D\uDCAC",
+          "label": "\uD83C\uDFD4Мир\uD83C\uDFD4",
           "payload": ""
         },
         "color": "secondary"
@@ -12,7 +12,7 @@
       {
         "action": {
           "type": "text",
-          "label": "\uD83D\uDC41Всё о тебе\uD83D\uDC41",
+          "label": "\uD83C\uDFE0Дом\uD83C\uDFE0",
           "payload": ""
         },
         "color": "secondary"
@@ -22,7 +22,15 @@
       {
         "action": {
           "type": "text",
-          "label": "\uD83D\uDCDCУправление землёй\uD83D\uDCDC",
+          "label": "\uD83C\uDFADКто я?\uD83C\uDFAD",
+          "payload": ""
+        },
+        "color": "secondary"
+      },
+      {
+        "action": {
+          "type": "text",
+          "label": "\uD83D\uDCBCИнвентарь\uD83D\uDCBC",
           "payload": ""
         },
         "color": "secondary"
@@ -32,7 +40,7 @@
       {
         "action": {
           "type": "text",
-          "label": "Инфа",
+          "label": "❔Глоссарий по боту❔",
           "payload": ""
         },
         "color": "secondary"
