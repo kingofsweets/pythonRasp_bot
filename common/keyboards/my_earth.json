@@ -1,0 +1,17 @@
+{
+  "buttons": [
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "Информация о землях",
+          "payload": ""
+        },
+        "color": "secondary"
+      }
+    ]
+  ],
+
+
+  "inline": true
+}

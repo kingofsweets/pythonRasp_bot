@@ -1,0 +1,35 @@
+{
+  "buttons": [
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "⚒Профессии⚒",
+          "payload": ""
+        },
+        "color": "primary"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "\uD83C\uDFDEЗемли\uD83C\uDFDE",
+          "payload": ""
+        },
+        "color": "primary"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "\uD83D\uDD30Уровень/ресурсы\uD83D\uDD30",
+          "payload": ""
+        },
+        "color": "primary"
+      }
+    ]
+  ],
+  "inline": true
+}

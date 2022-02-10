@@ -1,0 +1,58 @@
+{
+  "buttons": [
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "\uD83D\uDC9CКто гей?\uD83D\uDC9C",
+          "payload": ""
+        },
+        "color": "secondary"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "\uD83D\uDDA4Кто геи?\uD83D\uDDA4",
+          "payload": ""
+        },
+        "color": "secondary"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "\uD83C\uDF7AЗаключить пивной договор!\uD83C\uDF7A",
+          "payload": ""
+        },
+        "color": "secondary"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "\uD83C\uDFB5Заказать песню\uD83C\uDFB5",
+          "payload": ""
+        },
+        "color": "secondary"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "\uD83D\uDCACПоговорить с трактирщиком\uD83D\uDCAC",
+          "payload": ""
+        },
+        "color": "secondary"
+      }
+    ]
+
+  ],
+
+
+  "inline": true
+}

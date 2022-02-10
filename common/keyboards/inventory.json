@@ -1,0 +1,47 @@
+{
+  "buttons": [
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "❤Использовать зелье❤",
+          "payload": ""
+        },
+        "color": "secondary"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "\uD83D\uDC9AИспользовать зелье\uD83D\uDC9A",
+          "payload": ""
+        },
+        "color": "secondary"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "\uD83C\uDF7AИспользовать пиво\uD83C\uDF7A",
+          "payload": ""
+        },
+        "color": "secondary"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "✨Использовать зелье✨",
+          "payload": ""
+        },
+        "color": "secondary"
+      }
+    ]
+  ],
+
+
+  "inline": true
+}

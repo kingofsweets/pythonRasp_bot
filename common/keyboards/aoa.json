@@ -1,0 +1,50 @@
+{
+  "buttons": [
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "\uD83C\uDFD4Мир\uD83C\uDFD4",
+          "payload": ""
+        },
+        "color": "secondary"
+      },
+      {
+        "action": {
+          "type": "text",
+          "label": "\uD83C\uDFE0Дом\uD83C\uDFE0",
+          "payload": ""
+        },
+        "color": "secondary"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "\uD83C\uDFADКто я?\uD83C\uDFAD",
+          "payload": ""
+        },
+        "color": "secondary"
+      },
+      {
+        "action": {
+          "type": "text",
+          "label": "\uD83D\uDCBCИнвентарь\uD83D\uDCBC",
+          "payload": ""
+        },
+        "color": "secondary"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "❔Глоссарий по боту❔",
+          "payload": ""
+        },
+        "color": "secondary"
+      }
+    ]
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "buttons": [
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "N!Понедельник",
+          "payload": ""
+        },
+        "color": "secondary"
+      },
+      {
+        "action": {
+          "type": "text",
+          "label": "N!Вторник",
+          "payload": ""
+        },
+        "color": "secondary"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "N!Среда",
+          "payload": ""
+        },
+        "color": "secondary"
+      },
+      {
+        "action": {
+          "type": "text",
+          "label": "N!Четверг",
+          "payload": ""
+        },
+        "color": "secondary"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "N!Пятница",
+          "payload": ""
+        },
+        "color": "secondary"
+      },
+      {
+        "action": {
+          "type": "text",
+          "label": "N!Суббота",
+          "payload": ""
+        },
+        "color": "secondary"
+      }
+    ]
+  ],
+  "inline": true
+}

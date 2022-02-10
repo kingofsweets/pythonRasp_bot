@@ -1,0 +1,45 @@
+{
+  "buttons": [
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "\uD83C\uDF7BТаверна\uD83C\uDF7B",
+          "payload": ""
+        },
+        "color": "secondary"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "\uD83C\uDFEAЛавка\uD83C\uDFEA",
+          "payload": ""
+        },
+        "color": "secondary"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "⚔Пойти на охоту⚔",
+          "payload": ""
+        },
+        "color": "secondary"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "⚒Работать⚒",
+          "payload": ""
+        },
+        "color": "secondary"
+      }
+    ]
+  ],
+  "inline": true
+}

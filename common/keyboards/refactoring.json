@@ -1,0 +1,14 @@
+{
+    "buttons": [
+      [
+        {
+          "action": {
+            "type": "text",
+            "label": "А где?",
+            "payload": ""
+          },
+          "color": "secondary"
+        }
+      ]
+    ]
+  }
