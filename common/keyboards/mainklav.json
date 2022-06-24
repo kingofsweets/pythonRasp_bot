@@ -34,20 +34,10 @@
       {
         "action": {
           "type": "text",
-          "label": "Основная информация",
+          "label": "Для абитуриентов",
           "payload": ""
         },
         "color": "primary"
-      }
-    ],
-    [
-      {
-        "action": {
-          "type": "open_link",
-          "link": "https://discord.gg/cGTsWw8",
-          "label": "Discord(Вход в орден пингвинов)",
-          "payload": ""
-        }
       }
     ]
   ]

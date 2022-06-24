@@ -3,41 +3,41 @@
     [
       {
         "action": {
-          "type": "open_link",
-          "link": "https://lms.sfedu.ru/my/",
-          "label": "Перейти на лмс",
+          "type": "text",
+          "label": "Информация по хэштегам",
           "payload": ""
-        }
+        },
+        "color": "secondary"
       }
     ],
     [
       {
         "action": {
-          "type": "open_link",
-          "link": "https://lms.sfedu.ru/pluginfile.php/31958/mod_resource/content/1/практикум2.pdf",
-          "label": "Методичка Мат.анализ",
+          "type": "text",
+          "label": "Расписание по физ-ре",
           "payload": ""
-        }
+        },
+        "color": "secondary"
       }
     ],
     [
       {
         "action": {
-          "type": "open_link",
-          "link": "https://vk.com/doc506620577_578306832?hash=72b850fbaf261031e6&dl=9763abeee19243d446",
-          "label": "Методичка Основы Алгоритмизации",
+          "type": "text",
+          "label": "Контактная информация",
           "payload": ""
-        }
+        },
+        "color": "secondary"
       }
     ],
     [
       {
         "action": {
-          "type": "open_link",
-          "link": "https://grade.sfedu.ru/",
-          "label": "Перейти на БРС",
+          "type": "text",
+          "label": "Информация про кафедру",
           "payload": ""
-        }
+        },
+        "color": "secondary"
       }
     ]
   ],

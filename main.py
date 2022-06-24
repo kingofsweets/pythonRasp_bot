@@ -9,30 +9,30 @@ from bs4 import BeautifulSoup
 from chatterbot import ChatBot
 
 # Создаем экземпляр пространства для бота
-chatbot = ChatBot("Умный чел")
-trainer = ListTrainer(chatbot)
-# Открываем файлы с датасетами
-t1 = open('anim_0.txt', 'r', encoding='utf-8').readlines()
-t2 = open('anim_1.txt', 'r', encoding='utf-8').readlines()
-t3 = open('Data_sets/Типичный японский боевик.txt', 'r', encoding='utf-8').readlines()
-t4 = open('Data_sets/Яп_2.txt', 'r', encoding='utf-8').readlines()
+# chatbot = ChatBot("Умный чел")
+# trainer = ListTrainer(chatbot)
+# # Открываем файлы с датасетами
+# # t1 = open('anim_0.txt', 'r', encoding='utf-8').readlines()
+# # t2 = open('anim_1.txt', 'r', encoding='utf-8').readlines()
+# t3 = open('Data_sets/Типичный японский боевик.txt', 'r', encoding='utf-8').readlines()
+# t4 = open('Data_sets/Яп_2.txt', 'r', encoding='utf-8').readlines()
 
 
-# Подгружаем данные для тренировки бота
-# trainer.train(t1)
-# trainer.train(t2)
+# # Подгружаем данные для тренировки бота
+# # trainer.train(t1)
+# # trainer.train(t2)
 # trainer.train(t3)
 # trainer.train(t4)
 
 # Создаем функции ответа бота для каждого типа клавиатуры
 def write_msg(user_id, message):
     vk.method('messages.send', {'user_id': user_id, 'message': message, 'random_id': random.getrandbits(64),
-                                'keyboard': open("keyboards/mainklav.json", "r", encoding="UTF-8").read()})
+                                'keyboard': open("common/keyboards/mainklav.json", "r", encoding="UTF-8").read()})
 
 
 def write_msggs(user_id, message):
     vk.method('messages.send', {'user_id': user_id, 'message': message, 'random_id': random.getrandbits(64),
-                                'keyboard': open("keyboards/mainklav.json", "r", encoding="UTF-8").read()})
+                                'keyboard': open("common/keyboards/mainklav.json", "r", encoding="UTF-8").read()})
 
 
 def bazar(id):
@@ -49,22 +49,34 @@ def write_msginbeseda(chat_id, message):
 
 def write_msgwbot(user_id, message):
     vk.method('messages.send', {'user_id': user_id, 'message': message, 'random_id': random.getrandbits(64),
-                                'keyboard': open("keyboards/vbot.json", "r", encoding="UTF-8").read()})
+                                'keyboard': open("common/keyboards/vbot.json", "r", encoding="UTF-8").read()})
 
 
 def write_msginrasptek(user_id, message):
     vk.method('messages.send', {'user_id': user_id, 'message': message, 'random_id': random.getrandbits(64),
-                                'keyboard': open("keyboards/raspklav.json", "r", encoding="UTF-8").read()})
+                                'keyboard': open("common/keyboards/raspklav.json", "r", encoding="UTF-8").read()})
 
 
 def write_msginraspsled(user_id, message):
     vk.method('messages.send', {'user_id': user_id, 'message': message, 'random_id': random.getrandbits(64),
-                                'keyboard': open("keyboards/raspsledklav.json", "r", encoding="UTF-8").read()})
+                                'keyboard': open("common/keyboards/raspsledklav.json", "r", encoding="UTF-8").read()})
 
 
 def write_msgmaininf(user_id, message):
     vk.method('messages.send', {'user_id': user_id, 'message': message, 'random_id': random.getrandbits(64),
-                                'keyboard': open("keyboards/info.json", "r", encoding="UTF-8").read()})
+                                'keyboard': open("common/keyboards/info.json", "r", encoding="UTF-8").read()})
+
+def write_msgback(user_id, message):
+    vk.method('messages.send', {'user_id': user_id, 'message': message, 'random_id': random.getrandbits(64),
+                                'keyboard': open("common/keyboards/return.json", "r", encoding="UTF-8").read()})
+    
+def write_msgback_lof(user_id, message):
+    vk.method('messages.send', {'user_id': user_id, 'message': message, 'random_id': random.getrandbits(64),
+                                'keyboard': open("common/keyboards/return_copy.json", "r", encoding="UTF-8").read()})
+    
+def write_kafedra(user_id, message):
+    vk.method('messages.send', {'user_id': user_id, 'message': message, 'random_id': random.getrandbits(64),
+                                'keyboard': open("common/keyboards/kafedra.json", "r", encoding="UTF-8").read()})
 
 
 # Подлюкчаем токен группы
@@ -73,7 +85,7 @@ vk = vk_api.VkApi(token=token)
 longpoll = VkLongPoll(vk)
 
 # Парсим расписание с сайта первака
-abs = 'https://ictis.alex-b.me/3.htm'
+abs = 'https://ictis.alex-b.me/48.htm'
 r = requests.get(abs)
 
 soup = BeautifulSoup(r.text, 'html.parser')
@@ -119,7 +131,7 @@ for i in range(len(pars)):
     if 55 < i < 64:
         subbota.append(pars[i])
 
-url = 'https://ictis.alex-b.me/3.htm/7'
+url = 'https://ictis.alex-b.me/48.htm'
 m = requests.get(url)
 
 soup1 = BeautifulSoup(m.text, 'html.parser')
@@ -262,24 +274,89 @@ while True:
                 elif request == 'Включить душевные беседы':
                     write_msgwbot(event.user_id, 'Переключемся. Напишите что-нибудь')
                     break
-                elif request == 'Основная информация':
-                    write_msgmaininf(event.user_id, 'Ссылки:')
+                elif request == 'Для абитуриентов':
+                    write_msgmaininf(event.user_id, 'Основная информация')
+                elif request == 'Информация по хэштегам':
+                    write_msgback(event.user_id, '''
+                              Хэштеги для поиска по стене в группе:
+
+#кафедраСАиТ@sait_ictis — наш хэштег в сети
+#абитуриенту@sait_ictis — информация для поступающих
+#студенту@sait_ictis — информация для студентов
+#статья@sait_ictis — полезные и интересные IT статьи
+#видеокурс@sait_ictis — видеоматериалы для самообучения
+#книга@sait_ictis — полезные книги про IT и не только
+#вакансия@sait_ictis — IT вакансии, стажировки
+#карьера@sait_ictis — материалы для построения успешной карьеры в IT
+#конференция@sait_ictis, #хакатон@sait_ictis — информация о проводимых мероприятиях
+                              ''')
+                elif request == 'Расписание по физ-ре':
+                    write_msgback(event.user_id, '''
+                              Актуальное расписание занятий по физической культуре. Не забудьте взять с собой Медицинскую справку и карту-пропуск!
+
+Актуальная информация дисциплины - https://vk.com/club101308251
+                              ''')
+                elif request == 'Контактная информация':
+                    write_msgback(event.user_id, '''
+                              Контактная информация:
+
+Тел.: +7 (8634) 37-17-87
+Email: skucherov@sfedu.ru
+Сайт - sait.sfedu.ru
+Адрес - ул. Энгельса, 1 ауд. Г-137
+                              ''')
+                elif request == 'Вернуться к основной информации':
+                    write_msgmaininf(event.user_id, 'Основная информация')
+                
+                elif request == 'Информация про кафедру':
+                    write_kafedra(event.user_id, 'Что именно вы хотите узнать?')
+                
+                elif request == 'Вернуться к вопросам':
+                    write_kafedra(event.user_id, 'Что именно вы хотите узнать?')
+                elif request == 'Какие предметы тут изучают?':
+                    write_msgback_lof(event.user_id, '''
+                                  Мы обучаем самым важным предметам, которые пригодятся хорошему IT-специалисту: программирование, базы данных, моделирование и проектирование информационных систем, программная инженерия и др.
+
+Подробнее по ссылке: goo.gl/yhufQW
+                                  ''')
+                elif request == 'Смогу ли я стать крутым программистом?':
+                    write_msgback_lof(event.user_id, '''
+Конечно, сможете! Вы будете изучать программирование, как десктоп приложений, так мобильных и Web-приложений, а ещё мы можем предложить вам курсы 1С.
+
+Подробнее по ссылке: goo.gl/yhufQW                              ''')
+                
+                elif request == 'Кем устраиваются выпускники?':
+                    write_msgback_lof(event.user_id, '''
+Наши выпускники становятся разработчиками десктопных, мобильных и Web-приложений, робототехнических систем и «умной» электроники, руководителями ИТ-проектов (CTO, IT-директор, Project Manager), системными интеграторами, системными аналитиками, инженерами по качеству ИС (QA-инженер, тестировщик ПО).
+
+Подробнее по ссылке: goo.gl/yhufQW                              ''')
+                    
+                elif request == 'Где работают выпускники?':
+                    write_msgback_lof(event.user_id, '''
+Наши выпускники работают не только в лучших IT-компаниях региона, но и по всей России: Intel Corporation, 1С-Гэндальф, Inostudio, Oggetto web, Lodoss, Distillery, Umbrella, CBOSS, Авиаок, ОКБ Сухого, ТАНТК им. Г.М. Бериева, Ростелеком, Вымпелком, Мегафон, Т2 Мобайл (Tele2), Positive Technologies, КриптоСтандарт, НИП Информзащита, Сбербанк России, ВТБ 24, силовые структуры и ведомства (ВС РФ, ФСБ, МВД) и т.д.                              ''')
+                
+                elif request == 'Кого у вас готовят?':
+                    write_msgback_lof(event.user_id, '''
+Тут готовят IT-специалистов широкого профиля, владеющих современными практиками разработки и интеграции программно-аппаратных систем, а также умеющих применять полученные знания на практике. Наши выпускники разбираются во всех тонкостях жизненного цикла программных продуктов: от постановки задачи и проектирования систем до разработки и внедрения готовых решений. Полученные знания позволяют им управлять IT-проектами, возглавлять проектные группы, производить исследование бизнес-процессов и полную автоматизацию предприятий.
+
+Подробнее по ссылке: goo.gl/yhufQW                              ''')
+                    
                 elif request == 'Test_gs':
                     bazar(event.user_id)
                 else:
                     write_msg(event.user_id, 'Выберите команду')
 
     # Запуск бота в режиме разговора
-    for event in longpoll.listen():
+    # for event in longpoll.listen():
 
-        if event.type == VkEventType.MESSAGE_NEW:
+    #     if event.type == VkEventType.MESSAGE_NEW:
 
-            if event.to_me:
-                request = event.text
-                if request == 'Отключить разговоры с ботом':
-                    write_msg(event.user_id, 'Возвращаемся...Напишите что-нибудь')
-                    break
-                response = chatbot.get_response(request)
-                write_msgwbot(event.user_id, response)
-                print(request)
-                print(response)
+    #         if event.to_me:
+    #             request = event.text
+    #             if request == 'Отключить разговоры с ботом':
+    #                 write_msg(event.user_id, 'Возвращаемся...Напишите что-нибудь')
+    #                 break
+    #             response = chatbot.get_response(request)
+    #             write_msgwbot(event.user_id, response)
+    #             print(request)
+    #             print(response)

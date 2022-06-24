@@ -1,0 +1,17 @@
+{
+  "buttons": [
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "Вернуться к основной информации",
+          "payload": ""
+        },
+        "color": "primary"
+      }
+    ]
+  ],
+
+
+  "inline": true
+}

@@ -1,0 +1,17 @@
+{
+  "buttons": [
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "Вернуться к вопросам",
+          "payload": ""
+        },
+        "color": "primary"
+      }
+    ]
+  ],
+
+
+  "inline": true
+}
